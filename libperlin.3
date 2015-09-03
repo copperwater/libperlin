@@ -64,7 +64,8 @@ argument is the factor by which the magnitude of each successive octave is dimin
 is used to determine the largest and smallest possible values of noise for a given range of octaves and persistence.
 .Pp
 Perlin noise is based on psuedorandom numbers, but it also has to be repeatable. Calling a Perlin noise function twice with the same parameters will return the same number. You can seed the noise generator by calling 
-.Fn set_perlin_seed . The library makes no calls to
+.Fn set_perlin_seed .
+The library makes no calls to
 .Fn srand
 or
 .Fn rand .

@@ -185,3 +185,6 @@ float perlin_3d(float x, float y, float z, float persistence,
   return total;
 }
 
+void set_perlin_seed(unsigned int seed) {
+  perlin_seed = seed;
+}

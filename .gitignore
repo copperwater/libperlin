@@ -2,5 +2,6 @@
 *.a
 *.out
 *.dSYM/
-stub*
+stub
+stub_from_lib
 *.csv
