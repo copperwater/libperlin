@@ -5,7 +5,7 @@
 typedef unsigned char uchar;
 typedef unsigned int uint;
 
-unsigned int mytime;
+unsigned int perlin_seed;
 
 void get_perlin_minmax(float* min, float* max, float persistence,
 		       uchar obegin, uchar oend) {
@@ -35,9 +35,9 @@ static float interpolate(float v1, float v2, float between) {
 }
 #endif
 
-#define PRIME1_1D 68903
-#define PRIME2_1D 1255361
-#define PRIME3_1D 1756015823.0
+#define PRIME1 68903
+#define PRIME2 1255361
+#define PRIME3 1756015823.0
 
 //If fewer than 3 dimensions are desired, call with 0 for 2nd/3rd parameters.
 static float noise(int x, int y, int z) {
@@ -45,9 +45,15 @@ static float noise(int x, int y, int z) {
     unsigned int i;
     float f;
   } str;
-  long n = (x*mytime*mytime)^mytime + (y*mytime*mytime)^mytime + (z*mytime*mytime)^mytime;
+  
+  long n = (x*perlin_seed*perlin_seed)^perlin_seed;
+  if(y != 0)
+    n += (y*perlin_seed*perlin_seed)^perlin_seed;
+  if(z != 0)
+    n += (z*perlin_seed*perlin_seed)^perlin_seed;
+  
   n = ((n << 13) ^ n);
-  n = n*(n*(n+PRIME1_1D)+PRIME2_1D)+PRIME3_1D;
+  n = n*(n*(n+PRIME1)+PRIME2)+PRIME3;
   str.i = n & 0x7fffff;
   str.i |= 0x40000000;
   str.f -= 3.0;

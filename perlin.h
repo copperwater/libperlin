@@ -1,7 +1,7 @@
 #ifndef PERLIN_H
 #define PERLIN_H
 
-extern unsigned int mytime; //Store a call to time(0) here
+extern unsigned int perlin_seed; //Store a call to time(0) here
 
 float perlin_1d(float x,
 		float persistence, unsigned char obegin, unsigned char oend);
