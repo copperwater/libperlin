@@ -1,6 +1,8 @@
 *.o
+*.a
 *.out
 *.gch
 *.out
 *.dSYM/
 stub*
+*.csv
