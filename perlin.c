@@ -37,27 +37,30 @@ static float interpolate(float v1, float v2, float between) {
 
 #define PRIME1 68903
 #define PRIME2 1255361
-#define PRIME3 1756015823.0
+#define PRIME3 1756015823
 
 //If fewer than 3 dimensions are desired, call with 0 for 2nd/3rd parameters.
 static float noise(int x, int y, int z) {
+  //printf("NOISE %d %d %d\n", x, y, z);
   static union {
     unsigned int i;
     float f;
   } str;
   
-  long n = (x*perlin_seed*perlin_seed)^perlin_seed;
+  long n = (x*perlin_seed*(perlin_seed+PRIME1))^perlin_seed;
   if(y != 0)
-    n += (y*perlin_seed*perlin_seed)^perlin_seed;
+    n += (y*perlin_seed*(perlin_seed+PRIME2))^perlin_seed;
   if(z != 0)
-    n += (z*perlin_seed*perlin_seed)^perlin_seed;
-  
+    n += (z*perlin_seed*(perlin_seed+PRIME3))^perlin_seed;
+  //printf("%d %ld\n", perlin_seed, n);
+    
   n = ((n << 13) ^ n);
   n = n*(n*(n+PRIME1)+PRIME2)+PRIME3;
   str.i = n & 0x7fffff;
   str.i |= 0x40000000;
   str.f -= 3.0;
-  //printf("%d -> %.8f\n",x,str.f);
+  //printf("%d %d %d -> %f\n", x, y, z, str.f);
+  return str.f;
 }
 
 //////////////////////////////////////////////////
@@ -129,8 +132,9 @@ float perlin_2d(float x, float y, float persistence, uchar obegin, uchar oend) {
     freq = 1 << i; //pow(2,i);
     amp = pow(persistence, i);
     total += interp_noise_2d(x*freq + PRIME1_2D*i, y*freq + PRIME1_2D*i) * amp;
-    //printf("%f\n",interp_noise_2d(x*freq, y*freq) * amp);
+    //printf("%f  ",interp_noise_2d(x*freq, y*freq) * amp);
   }
+  //printf("\n");
   //printf("%f %f -> %f\n\n", x, y, total);
   return total;
 }
