@@ -14,3 +14,6 @@ perlin.o: perlin.c
 
 libperlin.a: perlin.o
 	ar -r libperlin.a perlin.o
+
+manpage: libperlin.3
+	sudo cp libperlin.3 /usr/share/man/man3
