@@ -1,0 +1,10 @@
+Name: libperlin
+Description: Library for 1D, 2D and 3D Perlin noise
+URL: github.com/copperwater/libperlin
+Version: 0.1.0
+Requires:
+Conflicts:
+
+Libs: -L /usr/local/lib/perlin -lperlin -lm
+Libs.private:
+Cflags: -I /usr/local/include/perlin
